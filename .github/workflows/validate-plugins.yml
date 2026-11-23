@@ -28,7 +28,9 @@ jobs:
       - name: Validate plugin definitions
         run: node scripts/validate-plugins.mjs
 
+      # The Codex port intentionally changes the source skills in this branch.
       - name: Check generated pstack harness trees
+        if: github.base_ref != 'codex'
         run: node scripts/generate-pstack-harness-trees.mjs --check
 
       - name: Test pstack skill scripts
