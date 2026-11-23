@@ -12,7 +12,10 @@ git fetch --no-tags origin main
 mirror=$(git rev-parse FETCH_HEAD)
 if [[ "$mirror" != "$tip" ]]; then
   git merge-base --is-ancestor "$mirror" "$tip"
-  gh api -X POST "repos/$GH_REPO/merge-upstream" -f branch=main >/dev/null
+  if ! gh api -X POST "repos/$GH_REPO/merge-upstream" -f branch=main >/dev/null; then
+    echo '::warning::GitHub could not advance the fork mirror. Comparing the fetched upstream commit directly.'
+    echo 'The fork main mirror needs attention. The pstack check uses the fetched upstream commit.' >> "$GITHUB_STEP_SUMMARY"
+  fi
 fi
 if [[ "$old" == "$raw" ]]; then
   echo "pstack already tracks $raw" >> "$GITHUB_STEP_SUMMARY"
@@ -26,7 +29,7 @@ fi
 base=$(git rev-parse HEAD)
 run="$GITHUB_SERVER_URL/$GH_REPO/actions/runs/$GITHUB_RUN_ID"
 git diff --binary "$old" "$raw" -- pstack > dist/01-upstream.patch
-if ! git apply --3way --index dist/01-upstream.patch; then
+if [[ -s dist/01-upstream.patch ]] && ! git apply --3way --index dist/01-upstream.patch; then
   title="Port conflict for pstack ${raw:0:12}"
   if [[ -z "$(gh issue list --state open --search "$title in:title" --json title --jq '.[].title' | grep -Fx "$title" || true)" ]]; then
     gh issue create --title "$title" --body "Upstream [$old...$raw](https://github.com/cursor/plugins/compare/$old...$raw) overlaps the Codex port. See the patch and conflicting paths in the [workflow run]($run). The released baseline remains $old."
