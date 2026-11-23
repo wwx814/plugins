@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Foundational Thinking
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Get the data shape right before writing logic. Define core types early, trace every access pattern, and choose structures that match the dominant paths. DRY the structure, not every line.
 
 Before sharing state between actors, ask what happens if another actor modifies it concurrently. If the answer is not "nothing", isolate.

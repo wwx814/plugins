@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Test Behavior, Not Implementation
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 A test is a claim about what users of the code can observe through its interface: return values, errors, state they can read back, and effects on outside systems. Private helpers, internal call order, and intermediate data are implementation.
 
 Judge each test against two imagined edits:

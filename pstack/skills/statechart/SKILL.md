@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Statechart
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 The chart shows how a system moves between states, in the words of the person who reads it. That person, the reader, decides whether the behavior is right.
 
 ## Run

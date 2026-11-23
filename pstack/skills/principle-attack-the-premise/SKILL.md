@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Attack the Premise
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 When two or more fixes that share one premise have failed the same gate, suspect the premise, not the fixes.
 
 - Write the premise down: the one sentence every failed fix assumed.

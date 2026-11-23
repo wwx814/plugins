@@ -1,0 +1,27 @@
+{
+  "name": "pstack",
+  "version": "0.15.47",
+  "description": "Lauren Tan's pstack skills with a community-maintained Codex adapter.",
+  "author": {
+    "name": "Lauren Tan (upstream)"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "requires_local_executor": true,
+  "homepage": "https://github.com/wwx814/plugins/tree/codex/pstack",
+  "repository": "https://github.com/wwx814/plugins",
+  "interface": {
+    "displayName": "pstack",
+    "shortDescription": "GitHub engineering workflows",
+    "longDescription": "Investigate code, compare designs, review changes and verify behavior with the pstack skills and playbooks. This independent Codex port maps tools, workspace paths and agent roles to the capabilities available in your session.",
+    "developerName": "wwx814 (Codex port), Lauren Tan (upstream)",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Code investigation",
+      "Change review",
+      "Behavior verification"
+    ],
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
+  }
+}

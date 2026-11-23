@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Build the Lever
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 When the work isn't trivial, build the tool that does it (a codemod, script, generator, or rerunnable check) instead of doing it by hand. The bar is triviality, not repetition. Skip the tool only for a couple of obvious edits.
 
 - Do the first unit by hand, then build the tool and prove it by rerunning it on that unit. Make it safe to rerun.

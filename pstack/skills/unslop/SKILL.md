@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Unslop
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Edit text to remove AI patterns. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone.
 
 Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.

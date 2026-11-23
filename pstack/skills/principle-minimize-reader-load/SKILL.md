@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Minimize Reader Load
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Reader load is the work a reader must do to understand code. It has two independent axes: layers to trace between the question and the answer, and hidden or mutable state to hold in their head. Guard both.
 
 - Collapse layers that only forward: wrappers with one caller, adapters with no second implementation, pass-through methods. Inline them.

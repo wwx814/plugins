@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Make Operations Idempotent
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Design every state-changing operation to converge to the correct state however many times it runs and wherever the previous run stopped.
 
 Derive each step from the state that exists, not from what the previous run meant to do. Read the current state, compare it to the goal, and apply only the difference.

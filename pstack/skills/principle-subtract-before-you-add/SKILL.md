@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Subtract Before You Add
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 When evolving a system, remove complexity first, then build. Default to subtraction.
 
 Make simplification a continual investment. Leave the design slightly simpler and more capable behind the same or smaller surface than you found it.

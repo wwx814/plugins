@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Migrate Callers Then Delete Legacy APIs
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 - Update tests to assert the new contract, and delete tests that only protect pre-refactor implementation details
 
 **When this applies:**

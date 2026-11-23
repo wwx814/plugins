@@ -6,4 +6,7 @@ disable-model-invocation: true
 
 # Exhaust the Design Space
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 It also applies to product design decisions where user experience depends on feel, not logic.

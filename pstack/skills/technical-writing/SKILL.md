@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Technical writing
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Write so a tired engineer understands on the first read.
 
 - Cut every word that does no work.

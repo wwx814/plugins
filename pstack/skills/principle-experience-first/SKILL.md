@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Experience First
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 When implementation convenience conflicts with user delight, choose delight.
 
 - Every feature, control, and option must be justified

@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Show me your work
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Keep one canonical log.
 
 ## The format

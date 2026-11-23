@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Type System Discipline
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Make the compiler reject impossible states, mismatched primitives, and unhandled variants.
 
 - **Brand semantic primitives.** If two arguments share a primitive type but mean different things, give each its own type. Validate once at creation.

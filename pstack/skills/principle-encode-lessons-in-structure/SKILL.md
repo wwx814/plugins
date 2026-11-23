@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Encode Lessons in Structure
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 If the lesson needs judgment and cannot be encoded, make the instruction more prominent and add an example of the failure mode.
 
 **Corollary:** If the fix is structural, only use the structural fix. The instruction is the symptom.

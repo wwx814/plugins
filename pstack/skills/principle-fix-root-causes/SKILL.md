@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Fix Root Causes
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Fix the fault, not the place where it surfaced. The root cause is the first place the system did something it should not do, or failed to handle a state it should handle.
 
 - Reproduce first. Ask "why" until the answer is a wrong decision in the code. When stuck, instrument and read the actual state.

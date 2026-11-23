@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Outcome-Oriented Execution
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Optimize for the intended, verifiable end state rather than preserving smooth intermediate states.
 
 **Why:** Keeping every intermediate step fully stable often creates temporary compatibility code that becomes long-lived debt. Converge on the target architecture and prove correctness at explicit verification boundaries.

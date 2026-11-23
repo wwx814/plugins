@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Never Block on the Human
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 The human supervises asynchronously. Agents must stay unblocked. Make reasonable decisions, proceed, and let the human course-correct after the fact. Since code changes are reversible and reviewable, a wrong decision usually costs less than blocking.
 
 - Proceed, then present. Do the work, show the result. Don't ask "should I do X?" Do X, explain why.

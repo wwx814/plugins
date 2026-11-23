@@ -7,6 +7,9 @@ disable-model-invocation: true
 
 # TypeScript best practices
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 Apply the **type-system-discipline** principle skill first.
 
 | Rule | Summary |

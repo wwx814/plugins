@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # Swarm
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tool names, agent roles, transcripts, and workspace paths throughout this workflow.
+
+
 ## Start
 
 Open a todolist with one entry per phase before launching anything.
