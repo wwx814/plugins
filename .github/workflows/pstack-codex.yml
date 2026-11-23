@@ -1,0 +1,96 @@
+name: pstack for Codex
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [codex]
+    paths: ['pstack/**', 'pstack-upstream.lock', 'pstack-package.py', '.github/workflows/pstack-codex.yml']
+  pull_request:
+    branches: [codex]
+    paths: ['pstack/**', 'pstack-package.py', 'pstack-upstream.lock']
+permissions:
+  contents: read
+concurrency:
+  group: pstack-${{ github.event_name == 'pull_request' && github.ref || 'maintenance' }}
+  cancel-in-progress: false
+jobs:
+  check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python pstack-package.py dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pstack-review
+          path: dist/
+  maintain:
+    if: github.repository == 'wwx814/plugins' && github.ref == 'refs/heads/codex' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex
+          fetch-depth: 0
+      - name: Configure commit author
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Materialize initial port
+        if: hashFiles('pstack-port-once.py') != ''
+        run: |
+          python pstack-port-once.py
+          git rm pstack-port-once.py
+          git add pstack .agents/plugins/marketplace.json pstack-upstream.lock
+          git commit -m 'Port pstack skills, role configuration and discovery to Codex'
+          git push origin HEAD:codex
+      - name: Build approved plugin
+        run: python pstack-package.py release
+      - name: Publish approved version
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(jq -er '.version' pstack/.codex-plugin/plugin.json)
+          tag="pstack-v$version"
+          zip="pstack-$version.zip"
+          raw=$(cat pstack-upstream.lock)
+          if gh release view "$tag" >/dev/null 2>&1; then
+            if [[ $(gh release view "$tag" --json isDraft --jq .isDraft) == false ]]; then
+              mkdir checked
+              gh release download "$tag" -p "$zip" -p "$zip.sha256" -D checked
+              (cd checked && sha256sum -c "$zip.sha256")
+              python - "$zip" <<'PY'
+          import sys, zipfile
+          name = sys.argv[1]
+          with zipfile.ZipFile('release/'+name) as a, zipfile.ZipFile('checked/'+name) as b:
+              def contents(z):
+                  return {i.filename:(i.external_attr,z.read(i)) for i in z.infolist()}
+              if contents(a) != contents(b):
+                  raise SystemExit('Package changed under an existing tag. Increment the Codex manifest version.')
+          PY
+              echo "Verified release $tag" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          else
+            gh release create "$tag" --draft --target "$(git rev-parse HEAD)" --title "pstack $version" --notes "Codex plugin based on [cursor/plugins@$raw](https://github.com/cursor/plugins/tree/$raw/pstack). Download the ZIP for the plugin uploader. The adjacent SHA-256 file verifies it."
+          fi
+          gh release upload "$tag" release/* --clobber
+          gh release edit "$tag" --draft=false
+      - name: Check upstream and prepare review
+        if: github.event_name != 'push'
+        run: bash pstack-sync.sh
+      - name: Save candidate and review diffs
+        if: always() && hashFiles('dist/*') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: pstack-update-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/
