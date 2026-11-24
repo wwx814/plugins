@@ -1,7 +1,7 @@
 name: pstack for Codex
 on:
   schedule:
-    - cron: '17 */6 * * *'
+    - cron: '23 */6 * * *'
   workflow_dispatch:
   push:
     branches: [codex]
@@ -81,7 +81,29 @@ jobs:
               exit 0
             fi
           else
-            gh release create "$tag" --draft --target "$(git rev-parse HEAD)" --title "pstack $version" --notes "Codex plugin based on [cursor/plugins@$raw](https://github.com/cursor/plugins/tree/$raw/pstack). Download the ZIP for the plugin uploader. The adjacent SHA-256 file verifies it."
+            if ! git show-ref --verify --quiet "refs/tags/$tag"; then
+              previous=$(git describe --tags --match 'pstack-v[0-9]*' --abbrev=0 HEAD^)
+              before=$(git show "$previous:pstack-upstream.lock")
+              git fetch --no-tags https://github.com/cursor/plugins.git refs/heads/main
+              git merge-base --is-ancestor "$before" "$raw"
+              {
+                echo "pstack $version"
+                echo
+                echo "Upstream pstack changes since $previous"
+                echo
+                if [[ "$before" == "$raw" ]]; then
+                  echo 'Codex port update only. The upstream baseline is unchanged.'
+                else
+                  git log --reverse --format='- [%h](https://github.com/cursor/plugins/commit/%H) %s%n%w(0,4,4)%b%w(0)%n' "$before..$raw" -- pstack/
+                fi
+                echo
+                echo "[Upstream comparison](https://github.com/cursor/plugins/compare/$before...$raw)"
+              } > "$RUNNER_TEMP/pstack-notes.md"
+              git tag -a "$tag" --cleanup=verbatim -F "$RUNNER_TEMP/pstack-notes.md" HEAD
+              git push origin "refs/tags/$tag"
+            fi
+            git for-each-ref --format='%(contents)' "refs/tags/$tag" > "$RUNNER_TEMP/pstack-notes.md"
+            gh release create "$tag" --verify-tag --draft --title "pstack $version" --notes-file "$RUNNER_TEMP/pstack-notes.md"
           fi
           gh release upload "$tag" release/* --clobber
           gh release edit "$tag" --draft=false
