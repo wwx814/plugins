@@ -4,6 +4,8 @@ description: "Teach the expert words for what the operator is building, borrow w
 disable-model-invocation: true
 ---
 
+In Codex, follow the [Codex adapter](../../docs/harness/codex.md) for tools, workspace paths, and agent roles.
+
 Teach the operator the expert words for what they are building. Start from their own files, code and description, not a summary.
 
 If their description could name more than one problem, first list the two or three problems it could be, each with the one term that names it and the sign that would tell it apart from the others. Then teach the words for the most likely one and say why you picked it.
